@@ -2,7 +2,7 @@
     <div class="page">
     <q-card class="cardLogin">
       <q-card-section>
-        <h1 class="title">goclinic</h1>
+        <h1 class="title">Goclin</h1>
         <q-form  @submit="onSubmit"  @reset="onReset" ref="myForm">
           <q-input v-model="name" label="Nome Completo" type="text" :rules="required"/>
           <q-input v-model="email" label="Email" type="email"  :rules="rulesEmail" />
@@ -29,6 +29,7 @@
 
 <script>
 import router from '../router'
+import { register } from '../services/api'
 export default {
   name: 'Login',
   data: () => {
@@ -44,45 +45,61 @@ export default {
       rulesEmail: [v => !!v || 'E-mail é obrigatório',
                    v => /.+@.+\..+/.test(v) || 'E-mail inválido'],
       rulesPwd: [v => !!v || 'Senha é obrigatório',
-                 v => v.length >= 6 || 'A senha deve conter pelo menos 6 caracteres',],
+                 v => v.length >= 6 || 'A senha deve conter pelo menos 6 caracteres',
+                 v =>  /^(?=.*\d)(?=.*[a-z])/.test(v) || 'A senha deve conter números e letras'],
       rulesCell: [v => !!v || 'Este campo é obrigatório',
                   v => v.length>=11 || 'Insira um telefone com 9 digítos além do DDD'],
-      options: ['Profissional', 'Atendente', 'Administrador']
+      options: [
+        {label:'Profissional', value: 'professional'}, 
+        {label:'Atendente', value:'attendant'}, 
+        {label:'Administrador', value:'administrator'}
+      ]
     }
   },
   methods:{
-     onSubmit () {
-       console.log("submit")
-      this.$refs.myForm.validate().then(success => {
-        if (success) {
-          console.log("validado")
-        }
-        else {
-          this.$q.notify({
-          color: 'error',
-          textColor: 'white',
-          icon: 'clear',
-          message: 'Submitted'
-        })
-        }
-      })
+    async requestRegister(){
+       
     },
+
+    async onSubmit () {
+      const res = await register({
+        email: this.email,
+        password:this.password,
+        name: this.name,
+        cellPhone: this.cellPhone,
+        scope: this.scope.value
+      })
+      if(res.hasError){
+        this.$q.notify({
+          message: res.error,
+          color: 'red',
+          position: 'top'
+        })
+      }else {
+        router.push({path: '/login'})
+      }
+    },
+        
+    
 
     onReset () {
       console.log("reset")
       router.back()
-    }
+    },
+
   }
 }
 </script>
 <style lang="scss">
+$main-bg-color: #a0a4a8;
+$title-color: #3ba0ea;
 .page{
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
     min-height: 100vh;
-    background: #ddd;
+    background: $main-bg-color;
 }
 .cardLogin{
     width: 50%;
@@ -91,6 +108,7 @@ export default {
 
 .title{
     font-size: 18pt;
+    color: $title-color
 }
 
 .nav{
