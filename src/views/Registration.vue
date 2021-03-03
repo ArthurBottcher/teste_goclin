@@ -1,8 +1,9 @@
 <template>
     <div class="page">
+    <img src="../assets/goclinicTemplate.png" alt="">
     <q-card class="cardLogin">
       <q-card-section>
-        <h1 class="title">Goclin</h1>
+         <img src="../assets/goclin.png"  class="logo" alt="">
         <q-form  @submit="onSubmit"  @reset="onReset" ref="myForm">
           <q-input v-model="name" label="Nome Completo" type="text" :rules="required"/>
           <q-input v-model="email" label="Email" type="email"  :rules="rulesEmail" />
@@ -91,11 +92,10 @@ export default {
 }
 </script>
 <style lang="scss">
-$main-bg-color: #a0a4a8;
-$title-color: #3ba0ea;
+$main-bg-color: #e2e2e2;
 .page{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex: 1;
     min-height: 100vh;
@@ -104,15 +104,20 @@ $title-color: #3ba0ea;
 .cardLogin{
     width: 50%;
     padding: 10px;
-}
-
-.title{
-    font-size: 18pt;
-    color: $title-color
+    margin-right: 30px;
 }
 
 .nav{
   display: flex;
   justify-content: space-around;
+}
+
+img{
+  height: 100vh;
+}
+
+.logo{
+  width: 150px;
+  height: 50px;
 }
 </style>

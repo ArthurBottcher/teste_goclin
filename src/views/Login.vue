@@ -1,9 +1,10 @@
 <template>
   <div class="page">
+    <img src="../assets/goclinicTemplate.png" alt="">
     <q-card class="cardLogin">
       <q-card-section>
         <q-form  @submit="onSubmit"  @reset="onReset">
-          <h1 class="title">Goclin</h1>
+          <img src="../assets/goclin.png"  class="logo" alt="">
           <q-input v-model="emailInput" label="Email" type="email"  :rules="rulesEmail" />
           <q-input v-model="password" label="Senha" :type="isPwd ? 'password' : 'text'" :rules=rulesPwd>
             <template v-slot:append>
@@ -65,8 +66,7 @@ export default {
 </script>
 <style lang="scss">
 //exemplo de uso alem da pasta ../styles que tbm utiliza scss
-$main-bg-color: #a0a4a8;
-$title-color: #3ba0ea;
+$main-bg-color: #e2e2e2;
 .page{
     display: flex;
     justify-content: center;
@@ -78,15 +78,20 @@ $title-color: #3ba0ea;
 .cardLogin{
     width: 50%;
     padding: 10px;
-}
-
-.title{
-    font-size: 18pt;
-    color: $title-color
+    margin-right: 30px;
 }
 
 .nav{
   display: flex;
   justify-content: space-around;
+}
+
+img{
+  height: 100vh;
+}
+.logo{
+  width: 150px;
+  height: 50px;
+  margin-bottom: 15px;
 }
 </style>
